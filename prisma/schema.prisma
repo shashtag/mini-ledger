@@ -1,0 +1,72 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model BankTransaction {
+  id             String   @id @default(uuid())
+  amount         Decimal  @db.Decimal(10, 2)
+  date           DateTime
+  description    String
+  reference      String?
+  currency       String   @default("USD")
+  rawContent     Json?    // Store original row data for debugging
+  reconciled     Boolean  @default(false)
+
+  // Relations
+  reconciliation ReconciliationRecord?
+
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([date])
+  @@index([amount])
+}
+
+model LedgerEntry {
+  id             String   @id @default(uuid())
+  amount         Decimal  @db.Decimal(10, 2)
+  date           DateTime
+  description    String
+  reference      String?
+  type           String   // CREDIT or DEBIT
+  reconciled     Boolean  @default(false)
+
+  // Relations
+  reconciliation ReconciliationRecord?
+
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([date])
+  @@index([amount])
+}
+
+enum ReconStatus {
+  MATCHED
+  PARTIAL
+  UNMATCHED
+}
+
+model ReconciliationRecord {
+  id                String          @id @default(uuid())
+  
+  bankTransactionId String          @unique
+  bankTransaction   BankTransaction @relation(fields: [bankTransactionId], references: [id])
+  
+  ledgerEntryId     String          @unique
+  ledgerEntry       LedgerEntry     @relation(fields: [ledgerEntryId], references: [id])
+
+  status            ReconStatus
+  confidenceScore   Int             // 0 to 100
+  notes             String?
+
+  matchedAt         DateTime        @default(now())
+}

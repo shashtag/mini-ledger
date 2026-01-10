@@ -1,0 +1,36 @@
+{
+  "name": "mini-ledger",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "ts-node src/index.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@prisma/client": "^5.10.2",
+    "@types/node": "^25.0.5",
+    "autoprefixer": "^10.4.23",
+    "nodemon": "^3.1.11",
+    "postcss": "^8.5.6",
+    "prisma": "^5.10.2",
+    "tailwindcss": "^4.1.18",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "@apollo/client": "^4.0.11",
+    "@apollo/server": "^5.2.0",
+    "clsx": "^2.1.1",
+    "csv-parse": "^6.1.0",
+    "graphql": "^16.12.0",
+    "graphql-tag": "^2.12.6",
+    "lucide-react": "^0.562.0",
+    "node-fetch": "^2.7.0",
+    "tailwind-merge": "^3.4.0",
+    "winston": "^3.19.0"
+  }
+}
