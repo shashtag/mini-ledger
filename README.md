@@ -17,12 +17,34 @@ This engine is designed to provide the **immutable proof of repayment** needed t
 
 ## 🛠️ Tech Stack
 
--   **Backend**: Node.js (TypeScript), Apollo Server, Prisma ORM.
+-   **Backend**: Node.js (TypeScript), Apollo Server (GraphQL), Prisma ORM.
 -   **Database**: PostgreSQL.
 -   **Frontend**: React 19, Vite, Tailwind CSS v4, Apollo Client.
 -   **Infrastructure**: Docker Compose, GitHub Actions.
 
----
+
+
+## 🏃‍♂️ How to Run
+
+1.  **Start Services**:
+    ```bash
+    docker compose up -d
+    ```
+
+2.  **Start Backend**:
+    ```bash
+    npm install
+    npm start
+    ```
+
+3.  **Start Frontend**:
+    ```bash
+    cd client
+    npm install
+    npm run dev
+    ```
+
+4.  **Visit**: `http://localhost:5173`
 
 ## 🏗️ Architecture & Decisions (Nivoda Roadmap)
 
@@ -114,24 +136,4 @@ We need to decouple "Intake" from "Processing".
 
 ---
 
-## 🏃‍♂️ How to Run
 
-1.  **Start Services**:
-    ```bash
-    docker compose up -d
-    ```
-
-2.  **Start Backend**:
-    ```bash
-    npm install
-    npm start
-    ```
-
-3.  **Start Frontend**:
-    ```bash
-    cd client
-    npm install
-    npm run dev
-    ```
-
-4.  **Visit**: `http://localhost:5173`
