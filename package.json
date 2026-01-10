@@ -4,19 +4,23 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
+    "test:cov": "jest --coverage",
     "start": "nodemon"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/jest": "^30.0.0",
     "@types/node": "^25.0.5",
     "autoprefixer": "^10.4.23",
+    "jest": "^30.2.0",
     "nodemon": "^3.1.11",
     "postcss": "^8.5.6",
     "prisma": "^5.10.2",
     "tailwindcss": "^4.1.18",
+    "ts-jest": "^29.4.6",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3"
   },
