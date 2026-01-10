@@ -43,6 +43,7 @@ export const typeDefs = gql`
     reconciledCount: Int!
     unreconciledCount: Int!
     ledgerEntryCount: Int!
+    outstandingCredit: Float!
   }
 
   type Mutation {

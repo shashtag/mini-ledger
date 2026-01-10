@@ -23,7 +23,7 @@ export class ReconciliationEngine {
 
     for (const txn of bankTxns) {
       // 1. EXACT MATCH: Amount, Date (same day or within 1 day), Reference
-      const exactMatch = ledgerEntries.find(entry => 
+      const exactMatch = ledgerEntries.find((entry: LedgerEntry) => 
         entry.amount.toNumber() === txn.amount.toNumber() &&
         // Simplified date check: exact ISO string or check separately
         Math.abs(entry.date.getTime() - txn.date.getTime()) < 86400000 && // < 24 hours
@@ -36,8 +36,50 @@ export class ReconciliationEngine {
         continue; // Move to next txn
       }
 
-      // 2. PARTIAL MATCH: Correct Amount + Date, but Reference fuzzy or missing
-      const partialMatch = ledgerEntries.find(entry => 
+      // 3. Check for Reference Match (Wire Fee & Late Payment Scenario)
+      const refMatch = ledgerEntries.find((entry: LedgerEntry) => 
+        entry.reference === txn.reference && 
+        entry.reconciled === false &&
+        Math.abs(entry.amount.toNumber() - txn.amount.toNumber()) <= 50
+      );
+
+      if (refMatch) {
+        // Calculate Days Late
+        // 1. Extract Terms (Net-30, Net-60)
+        const termsMatch = refMatch.description.match(/Net-(\d+)/);
+        const termsDays = termsMatch ? parseInt(termsMatch[1]) : 30; // Default to Net-30 if not found
+        
+        // 2. Calculate Due Date
+        const dueDate = new Date(refMatch.date);
+        dueDate.setDate(dueDate.getDate() + termsDays);
+
+        // 3. Compare with Txn Date
+        const diffTime = txn.date.getTime() - dueDate.getTime();
+        const daysLate = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+        let notes = `Ref Match.`;
+        if (Math.abs(refMatch.amount.toNumber() - txn.amount.toNumber()) > 0.01) {
+           notes += ` Variance: $${(refMatch.amount.toNumber() - txn.amount.toNumber()).toFixed(2)} (Fee).`;
+        }
+        if (daysLate > 0) {
+           notes += ` ⚠️ LATE PAYMENT: ${daysLate} days overdue (Terms: Net-${termsDays}).`;
+        } else {
+           notes += ` Paid on time.`;
+        }
+
+         await this.createMatch(
+           txn,
+           refMatch,
+           'PARTIAL', // Always partial if variance or late, for safety
+           daysLate > 0 ? 80 : 95, 
+           notes
+         );
+        matchCount++;
+        continue;
+      }
+      
+      // 4. PARTIAL MATCH: Correct Amount + Date, but Reference fuzzy or missing
+      const partialMatch = ledgerEntries.find((entry: LedgerEntry) => 
         entry.amount.toNumber() === txn.amount.toNumber() &&
         Math.abs(entry.date.getTime() - txn.date.getTime()) < 172800000 // < 48 hours
       );

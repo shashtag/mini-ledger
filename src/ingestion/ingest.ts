@@ -53,7 +53,7 @@ export class IngestionService {
       `${amount.toFixed(2)}|${date.getTime()}|${ref || 'NULL'}|${desc}`;
 
     const existingSignatures = new Set(
-      existingTransactions.map(t => createSignature(Number(t.amount), t.date, t.reference, t.description))
+      existingTransactions.map((t: any) => createSignature(Number(t.amount), t.date, t.reference, t.description))
     );
 
     // 4. In-Memory Deduplication

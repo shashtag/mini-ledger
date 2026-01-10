@@ -29,6 +29,7 @@ export const GET_STATS = gql`
       reconciledCount
       unreconciledCount
       ledgerEntryCount
+      outstandingCredit
     }
   }
 `;

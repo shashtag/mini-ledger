@@ -36,11 +36,19 @@ export const resolvers = {
       const total = await prisma.bankTransaction.count();
       const reconciled = await prisma.bankTransaction.count({ where: { reconciled: true } });
       const ledgerCount = await prisma.ledgerEntry.count();
+      
+      // Calculate Risk Exposure (Sum of unreconciled credit)
+      const exposure = await prisma.ledgerEntry.aggregate({
+        _sum: { amount: true },
+        where: { reconciled: false }
+      });
+
       return {
         totalTransactions: total,
         reconciledCount: reconciled,
         unreconciledCount: total - reconciled,
-        ledgerEntryCount: ledgerCount
+        ledgerEntryCount: ledgerCount,
+        outstandingCredit: exposure._sum.amount ? Number(exposure._sum.amount) : 0
       };
     }
   },

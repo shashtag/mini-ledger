@@ -27,28 +27,57 @@ export class LedgerService {
    */
   static async seedMockData() {
     // 1. Exact match candidate
+    // 1. Perfect Match (High Value)
     await this.createEntry({
-      amount: 100.00,
-      date: new Date('2023-10-01'),
-      description: 'Order #1001',
-      reference: 'REF-1001',
+      amount: 12500.00,
+      date: new Date('2023-11-01'),
+      description: 'Inv #NV-2023-001 (Net-30) - Brilliant Cut Batch',
+      reference: 'NV-1001',
       type: 'CREDIT'
     });
 
-    // 2. Partial match candidate (Date off by 1 day)
+    // 2. Date Slip (International Wire delay)
     await this.createEntry({
-      amount: 250.50,
-      date: new Date('2023-10-05'), // Bank might show Oct 6th
-      description: 'Order #1002',
-      reference: 'REF-1002',
+      amount: 4250.00,
+      date: new Date('2023-11-05'),
+      description: 'Inv #NV-2023-002 (Net-30) - Antwerp Logistics',
+      reference: 'NV-1002',
       type: 'CREDIT'
     });
 
-    // 3. Unmatched candidate
+    // 3. Partial Match (Wire Fee deduction)
     await this.createEntry({
-      amount: 999.99,
-      date: new Date('2023-10-10'),
-      description: 'Order #1003 Missing Payment',
+      amount: 8000.00,
+      date: new Date('2023-11-10'),
+      description: 'Inv #NV-2023-003 (Net-30) - HK Supplier',
+      reference: 'NV-1003',
+      type: 'CREDIT'
+    });
+
+    // 4. At Risk (Unpaid / Outstanding)
+    await this.createEntry({
+      amount: 15000.00,
+      date: new Date('2023-11-12'),
+      description: 'Inv #NV-2023-004 (Net-60) - NY Retailer Large Order',
+      reference: 'NV-1004',
+      type: 'CREDIT'
+    });
+
+    // 5. Perfect Match (Small)
+    await this.createEntry({
+      amount: 2100.00,
+      date: new Date('2023-11-15'),
+      description: 'Inv #NV-2023-005 (Net-30) - Sample Stone',
+      reference: 'NV-1005',
+      type: 'CREDIT'
+    });
+
+    // 6. Late Payment Candidate
+    await this.createEntry({
+      amount: 5500.00,
+      date: new Date('2023-10-15'), // Due Oct 30 (Net-15)
+      description: 'Inv #NV-2023-006 (Net-15) - Old Inventory',
+      reference: 'NV-1006',
       type: 'CREDIT'
     });
 
