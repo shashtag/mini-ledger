@@ -3,10 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {
     "test": "jest",
     "test:cov": "jest --coverage",
-    "start": "nodemon"
+    "start": "node dist/src/index.js",
+    "dev": "nodemon",
+    "build": "tsc"
   },
   "keywords": [],
   "author": "",
