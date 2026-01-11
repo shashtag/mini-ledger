@@ -2,7 +2,7 @@
 
 **A Financial Integrity Layer for Global Trade**
 
-This project represents the core infrastructure required to support high-value fintech operations like **Nivoda Capital**. In a ecosystem where retailers rely on Net-30/60 terms, the ability to accurately reconcile **Credit Issued (Internal Ledger)** against **Cash Received (Bank Statements)** is the foundation of liquidity management and risk control.
+This project represents the core infrastructure required to support high-value fintech operations like **Enterprise Fintech Capital**. In a ecosystem where retailers rely on Net-30/60 terms, the ability to accurately reconcile **Credit Issued (Internal Ledger)** against **Cash Received (Bank Statements)** is the foundation of liquidity management and risk control.
 
 This engine is designed to provide the **immutable proof of repayment** needed to sustain a $60M+ credit facility, ensuring that working capital gaps are monitored in real-time.
 
@@ -23,6 +23,10 @@ This engine is designed to provide the **immutable proof of repayment** needed t
 -   **Infrastructure**: Docker Compose, GitHub Actions.
 
 
+
+## 📚 Project Slides
+
+[Building the Enterprise Ledger: From Prototype to Production-Grade Financial Infrastructure](https://docs.google.com/presentation/d/1DrRVOpfTy3u3x-i5mmeRmud4gRfMr1sAkSTgWz48XkA/edit?usp=sharing)
 
 ## 🏃‍♂️ How to Run
 
@@ -46,7 +50,7 @@ This engine is designed to provide the **immutable proof of repayment** needed t
 
 4.  **Visit**: `http://localhost:5173`
 
-## 🏗️ Architecture & Decisions (Nivoda Roadmap)
+## 🏗️ Architecture & Decisions (Production Roadmap)
 
 This project demonstrates a "Senior Engineer" approach to building scalable financial systems.
 
@@ -73,9 +77,9 @@ This project demonstrates a "Senior Engineer" approach to building scalable fina
 
 ---
 
-## 🔮 Future Architecture Roadmap (Nivoda Production Standard)
+## 🔮 Future Architecture Roadmap (Enterprise Production Standard)
 
-> **Purpose**: This section outlines the technical evolution from this prototype to a Production-Grade Financial System aligned with Nivoda's architecture standards.
+> **Purpose**: This section outlines the technical evolution from this prototype to a Production-Grade Financial System aligned with Enterprise architecture standards.
 
 ### 1. Domain Modeling: The "Double-Entry" Refactor
 
@@ -97,7 +101,7 @@ We must separate the **Business Intent** from the **Accounting Impact**.
 *An immutable log of debits and credits.*
 - `id`: UUID
 - `transaction_id`: FK to Transactions
-- `account_id`: UUID (e.g., "Retailer_A_Wallet", "Nivoda_Revenue")
+- `account_id`: UUID (e.g., "Retailer_A_Wallet", "Platform_Revenue")
 - `direction`: `DEBIT` | `CREDIT`
 - `amount`: `BIGINT` (Minor units, e.g., cents)
 - `currency`: `USD`

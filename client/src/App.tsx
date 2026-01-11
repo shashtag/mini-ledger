@@ -186,7 +186,7 @@ function App() {
         <div className="bg-indigo-50 border border-indigo-100 rounded-xl p-6 mb-8 flex items-start space-x-4">
           <Info className="w-6 h-6 text-indigo-600 flex-shrink-0 mt-1" />
           <div>
-            <h2 className="text-lg font-bold text-indigo-900">Nivoda Capital: Liquidity Engine Prototype</h2>
+            <h2 className="text-lg font-bold text-indigo-900">Enterprise Fintech: Liquidity Engine Prototype</h2>
             <p className="text-indigo-700 mt-1 text-sm leading-relaxed">
               This system demonstrates the financial infrastructure required to support a <strong>$60M Credit Facility</strong>. 
               Instead of simple transaction matching, this engine calculates <strong>Real-Time Credit Exposure</strong> by reconciling 
